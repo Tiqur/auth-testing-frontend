@@ -19,11 +19,12 @@ function LoginPage() {
       // Navigate user to profile page
       if (resp.status == 200) {
          history.push('/profile');
-      } else {
-        console.log("Something went wrong")
       }
       
       console.log(`Done! \nStatus: ${resp.status}`)
+    }).catch(error => {
+        if (error.response.status === 401) set_error(error.response.data.message);
+        console.log(`Something went wrong: ${error}`)
     });
   }
 

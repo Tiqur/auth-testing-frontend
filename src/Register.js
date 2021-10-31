@@ -15,17 +15,18 @@ function RegisterPage() {
   const handleRegister = () => {
     const data = { email: email_input, password: password_input, password2: password_input2 };
     console.log('Sending request...\nMethod: POST\nData:', data);
-    axios.post('http://127.0.0.1:3001/register', data).then((resp) => {
-      
-      // Navigate to login page
-      if (resp.status == 201) {
-         history.push('/login');
-      } else {
-        console.log("Something went wrong")
-      }
+      axios.post('http://127.0.0.1:3001/register', data).then((resp) => {
+        
+        // Navigate to login page
+        if (resp.status === 201) {
+          history.push('/login');
+          console.log(`Done! \nStatus: ${resp.status}`)
+        } 
 
-      console.log(`Done! \nStatus: ${resp.status}`)
-    });
+      }).catch(error => {
+        if (error.response.status === 401) set_error(error.response.data.message);
+        console.log(`Something went wrong: ${error}`)
+      })
   }
 
   return (
